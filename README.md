@@ -9,6 +9,6 @@
 <li>User Story: As an authenticated user, if I upload an image that is broken, it will be replaced by a placeholder image. (can use jQuery broken image detection)</li>
 </ul>
 
-<p>Sample deployment here: </p>
+<p>Sample deployment here: https://gentle-refuge-57440.herokuapp.com</p>
 
 <!-- https://photoboard.herokuapp.com/ -->
