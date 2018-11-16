@@ -1,14 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
+import Auth from '../modules/Auth.js';
 import {
   BrowserRouter as Router,
   Route,
-  Link,
   browserHistory
 } from 'react-router-dom'
 
-import Main from './components/Main.jsx';
+import Main from './components/Main.jsx'
 
 class App extends React.Component {
 	render() {
