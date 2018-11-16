@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "watch": "webpack -d --watch",
-    "serve": "node index.js",
+    "start": "node index.js",
     "heroku-postbuild": "webpack --display-error-details"
   },
   "author": "Will G.",
