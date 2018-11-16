@@ -47,7 +47,7 @@ class Main extends React.Component {
 					<nav>
 						{navigationItems}
 					</nav>		
-					<h3 className='text-muted'>FreeCodeCamp Book Trading App</h3>
+					<h3 className='text-muted'>Pasteboard</h3>
 				</div>
 
 				<div className='row'>
