@@ -54,7 +54,7 @@ class LoginFormContainer extends React.Component {
 
 		xhr.addEventListener('load', () => {
 			if (xhr.status === 200) {
-				Auth.authenticateUser(xhr.response.token);
+				Auth.authenticateUser(xhr.response.token, xhr.response.username);
 
 				console.log(xhr.response);
 

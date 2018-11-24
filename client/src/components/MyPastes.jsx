@@ -12,21 +12,15 @@ class MyProfile extends React.Component{
 
 		return (
 			<div className='col-lg-12'>
-				<h2 className='page-header'>My Profile</h2>
+				<h2 className='page-header'>My Pastes</h2>
 				{message}
-				Username: {this.props.user.username}<br />
-				E-mail: {this.props.user.email}<br />
-				Name: {this.props.user.firstName + ' ' + this.props.user.lastName}<br />
-				City: {this.props.user.city}<br />
-				State: {this.props.user.state}
 			</div>
 		);
 	}
 }
 
 MyProfile.propTypes = {
-	successMessage: PropTypes.string.isRequired,
-	user: PropTypes.object.isRequired
+	successMessage: PropTypes.string.isRequired
 }
 
 export default MyProfile;

@@ -43,7 +43,7 @@ router.post('/login', function(request, response, next) {
 		});
 	}
 
-	return passport.authenticate('local-login', function(error, token, userData) {
+	return passport.authenticate('local-login', function(error, token, username) {
 		const errors = {};
 
 		if (error) {
@@ -70,7 +70,7 @@ router.post('/login', function(request, response, next) {
 			success: true,
 			message: 'You have successfully logged in!',
 			token,
-			user: userData
+			username
 		});
 	}) (request, response, next);
 });

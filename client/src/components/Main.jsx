@@ -11,7 +11,7 @@ import {
 import AllBooksContainer from './AllBooksContainer.jsx';
 import LoginContainer from './LoginContainer.jsx';
 import RegisterContainer from './RegisterContainer.jsx';
-import MyProfileContainer from './MyProfileContainer.jsx';
+import MyPastesContainer from './MyPastesContainer.jsx';
 import Logout from './Logout.jsx';
 
 class Main extends React.Component {
@@ -27,7 +27,7 @@ class Main extends React.Component {
 				<li className='dropdown'>
 					<a href="#" className='dropdown-toggle' data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Account <span className="caret"></span></a>
 					<ul className='dropdown-menu'>
-						<li><Link to="/my_profile">My Pastes</Link></li>
+						<li><Link to="/my_pastes">My Pastes</Link></li>
 						<li role="separator" className="divider"></li>
 						<li><Link to='/logout'>Logout</Link></li>
 					</ul>
@@ -57,7 +57,7 @@ class Main extends React.Component {
 					<Route path="/logout" component={Logout} />
 					<Route path="/login" component={LoginContainer} />
 					<Route path="/register" component={RegisterContainer} />
-					<Route path="/my_profile" component={MyProfileContainer} />
+					<Route path="/my_pastes" component={MyPastesContainer} />
 				</div>
 
 				<footer className='footer'>

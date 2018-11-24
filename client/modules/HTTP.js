@@ -1,10 +1,10 @@
 import Auth from './Auth.js'
 
-class Post {
+class HTTP {
 
-	static makePostRequest(formData, path, authorizationRequired, callback) {
+	static makeRequest(formData, method, path, authorizationRequired, callback) {
 		const xhr = new XMLHttpRequest();
-		xhr.open('post', path);
+		xhr.open(method, path);
 		xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 		xhr.responseType = 'json';
 
@@ -31,4 +31,4 @@ class Post {
 
 }
 
-export default Post;
+export default HTTP;

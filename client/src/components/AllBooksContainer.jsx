@@ -1,6 +1,6 @@
 import React from 'react';
 import Auth from '../../modules/Auth.js';
-import Post from '../../modules/Post.js';
+import HTTP from '../../modules/HTTP.js';
 import AllBookRow from './AllBookRow.jsx';
 import { Redirect } from 'react-router-dom';
 
@@ -18,16 +18,16 @@ class AllBooksContainer extends React.Component {
 
 	componentWillMount() {
 
-		Post.makePostRequest(null, '/api/get_all_books', true, (xhr) => {
-			if (xhr.status === 200) {
-				this.setState({
-					allBooks: xhr.response,
-					isLoaded: true
-				});
-			} else {
-				console.log(xhr.response);
-			}
-		});
+		// HTTP.makeRequest(null, '/api/get_all_books', true, (xhr) => {
+		// 	if (xhr.status === 200) {
+		// 		this.setState({
+		// 			allBooks: xhr.response,
+		// 			isLoaded: true
+		// 		});
+		// 	} else {
+		// 		console.log(xhr.response);
+		// 	}
+		// });
 	}
 
 	handleBookRequest(event) {
@@ -41,7 +41,7 @@ class AllBooksContainer extends React.Component {
 
 			const formData = `bookId=${event.target.id}`;
 
-			Post.makePostRequest(formData, '/api/make_book_request', true, (xhr) => {
+			HTTP.makePostRequest(formData, '/api/make_book_request', true, (xhr) => {
 				if (xhr.status === 200) {
 					this.setState({
 						successMessage: xhr.response.message
