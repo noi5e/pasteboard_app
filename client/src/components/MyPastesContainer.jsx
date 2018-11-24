@@ -1,8 +1,8 @@
 import React from 'react';
-import Auth from '../../modules/Auth.js';
 import { Redirect } from 'react-router-dom';
 import { Alert } from 'react-bootstrap';
 import MyPastes from './MyPastes.jsx';
+import Auth from '../../modules/Auth.js';
 import HTTP from '../../modules/HTTP.js';
 
 class MyPastesContainer extends React.Component {
@@ -26,7 +26,10 @@ class MyPastesContainer extends React.Component {
 
 	componentDidMount() {
 
-		HTTP.makeRequest(null, 'get', '/user/get_user_pastes', false, (xhr) => {
+		const username = encodeURIComponent(Auth.getUsername())
+		const formData = `username=${username}`
+
+		HTTP.makeRequest(null, 'get', '/user/get_user_pastes?' + formData, false, (xhr) => {
 			if (xhr.status === 200) {
 				this.setState({
 					isLoaded: true

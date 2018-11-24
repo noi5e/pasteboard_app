@@ -23,6 +23,8 @@ class HTTP {
 		});
 
 		if (formData) {
+			console.log(formData);
+
 			xhr.send(formData);
 		} else {
 			xhr.send();
