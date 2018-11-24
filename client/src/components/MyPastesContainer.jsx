@@ -1,7 +1,8 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { Alert } from 'react-bootstrap';
-import MyPastes from './MyPastes.jsx';
+import MyPastesForm from './MyPastesForm.jsx';
+import PastesList from './PastesList.jsx';
 import Auth from '../../modules/Auth.js';
 import HTTP from '../../modules/HTTP.js';
 
@@ -20,8 +21,15 @@ class MyPastesContainer extends React.Component {
 		this.state = {
 			successMessage,
 			pastes: [],
-			isLoaded: false
+			isLoaded: false,
+			pasteForm: {
+				imageURL: '',
+				description: ''
+			}
 		}
+
+		this.handleChange = this.handleChange.bind(this);
+		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
 	componentDidMount() {
@@ -32,12 +40,27 @@ class MyPastesContainer extends React.Component {
 		HTTP.makeRequest(null, 'get', '/user/get_user_pastes?' + formData, false, (xhr) => {
 			if (xhr.status === 200) {
 				this.setState({
+					pastes: xhr.response.pastes,
 					isLoaded: true
 				})
 			} else {
 				console.log(xhr.response);
 			}
 		})
+	}
+
+	handleChange(event) {
+		const field = event.target.id;
+		const pasteForm = this.state.pasteForm;
+		pasteForm[field] = event.target.value;
+
+		this.setState({
+			pasteForm: pasteForm
+		});
+	}
+
+	handleSubmit(event) {
+		event.preventDefault();
 	}
 
 	render() {
@@ -49,8 +72,9 @@ class MyPastesContainer extends React.Component {
 		
 		return (
 			<div className='col-lg-12'>
-				<h2 className='page-header'>My Profile</h2>
-				{this.state.isLoaded ? this.state.pastes.length > 0 ? <MyPastes successMessage={this.state.successMessage} /> : 'You don\'t have any pastes. Why not add one?' : 'Loading profile...'}
+				<h2 className='page-header'>My Pastes</h2>
+				<MyPastesForm onChange={this.handleChange} onSubmit={this.handleSubmit} pasteForm={this.state.pasteForm} />
+				{this.state.isLoaded ? this.state.pastes.length > 0 ? <PastesList pastes={this.state.pastes} /> : 'You don\'t have any pastes. Why not add one?' : 'Loading profile...'}
 			</div>
 		);
 	}
