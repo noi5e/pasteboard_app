@@ -1,18 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Paste from './Paste.jsx';
+import Masonry from 'react-masonry-component';
 
 class PastesList extends React.Component {
 	render() {
 		let pastes = [];
-		pastes = this.props.pastes.map((paste) => {
-			return <Paste imageURL={paste.imageURL} description={paste.description} />
+
+		pastes = this.props.pastes.map((paste, index) => {
+			return <Paste key={index} imageURL={paste.imageURL} description={paste.description} />
 		});	
 
 		return (
-			<div className='grid'>
+			<Masonry className='grid'>
 				{pastes}
-			</div>
+			</Masonry>
 		);
 	}
 }

@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 class Paste extends React.Component {
 	render() {
 		return (
-			<div class="grid-item">
+			<div className="grid-item">
 				<img src={this.props.imageURL} /><br />
-				{description}
+				{this.props.description}
 			</div>
 		);
 	}

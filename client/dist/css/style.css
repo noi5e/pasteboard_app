@@ -9,6 +9,7 @@
 
 .grid-item {
   width: 200px;
+  float: left;
 }
 
 .grid-item--width2 {

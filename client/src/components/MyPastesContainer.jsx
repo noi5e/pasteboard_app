@@ -62,7 +62,11 @@ class MyPastesContainer extends React.Component {
 			if (xhr.status === 200) {
 				this.setState({
 					pastes: xhr.response.pastes,
-					successMessage: xhr.response.message
+					successMessage: xhr.response.message,
+					pasteForm: {
+						imageURL: '',
+						description: ''
+					}
 				})
 			} else {
 				console.log(xhr.response);
@@ -79,9 +83,9 @@ class MyPastesContainer extends React.Component {
 
 		return (
 			<div className='col-lg-12'>
-				{this.state.successMessage && <Alert bsStyle="success">{this.props.successMessage}</Alert>}
+				{this.state.successMessage && <Alert bsStyle="success">{this.state.successMessage}</Alert>}
 				<MyPastesForm onChange={this.handleChange} onSubmit={this.handleSubmit} pasteForm={this.state.pasteForm} />
-				{this.state.isLoaded ? this.state.pastes.length > 0 ? <div><h3 className='page-header'>Your Books</h3><PastesList pastes={this.state.pastes} /></div> : 'You don\'t have any pastes. Why not add one?' : 'Loading profile...'}
+				{this.state.isLoaded ? this.state.pastes.length > 0 ? <div><h3 className='page-header'>Your Pastes</h3><PastesList pastes={this.state.pastes} /></div> : 'You don\'t have any pastes. Why not add one?' : 'Loading profile...'}
 			</div>
 		);
 	}
