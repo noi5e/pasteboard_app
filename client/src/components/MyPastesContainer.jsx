@@ -10,14 +10,6 @@ class MyPastesContainer extends React.Component {
 	constructor(props) {
 		super(props);
 
-		const storedMessage = localStorage.getItem('successMessage');
-		let successMessage = '';
-
-		if (storedMessage) {
-			successMessage = storedMessage;
-			localStorage.removeItem('successMessage');
-		}
-
 		this.state = {
 			successMessage,
 			pastes: [],
@@ -61,6 +53,21 @@ class MyPastesContainer extends React.Component {
 
 	handleSubmit(event) {
 		event.preventDefault();
+
+		const imageURL = encodeURIComponent(this.state.pasteForm.imageURL);
+		const description = encodeURIComponent(this.state.pasteForm.description);
+		const formData = `imageURL=${imageURL}&description=${description}`;
+
+		HTTP.makeRequest(formData, 'post', '/api/add_new_paste', true, (xhr) => {
+			if (xhr.status === 200) {
+				this.setState({
+					pastes: xhr.response.pastes,
+					successMessage: xhr.response.message
+				})
+			} else {
+				console.log(xhr.response);
+			}
+		});
 	}
 
 	render() {
@@ -69,10 +76,11 @@ class MyPastesContainer extends React.Component {
 				<Redirect to='/' />
 			);
 		}
-		
+
 		return (
 			<div className='col-lg-12'>
 				<h2 className='page-header'>My Pastes</h2>
+				{this.state.successMessage && <Alert bsStyle="success">{this.props.successMessage}</Alert>}
 				<MyPastesForm onChange={this.handleChange} onSubmit={this.handleSubmit} pasteForm={this.state.pasteForm} />
 				{this.state.isLoaded ? this.state.pastes.length > 0 ? <PastesList pastes={this.state.pastes} /> : 'You don\'t have any pastes. Why not add one?' : 'Loading profile...'}
 			</div>
