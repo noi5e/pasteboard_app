@@ -7,6 +7,14 @@
   margin-bottom: 0px;
 }
 
+.grid-item {
+  width: 200px;
+}
+
+.grid-item--width2 {
+  width: 400px;
+}
+
 /* Space out content a bit */
 body {
   padding-top: 20px;

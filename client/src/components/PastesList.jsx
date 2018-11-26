@@ -1,11 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Paste from './Paste.jsx';
 
 class PastesList extends React.Component {
 	render() {
+		let pastes = [];
+		pastes = this.props.pastes.map((paste) => {
+			return <Paste imageURL={paste.imageURL} description={paste.description} />
+		});	
+
 		return (
-			<div>
-				{this.props.pastes}
+			<div className='grid'>
+				{pastes}
 			</div>
 		);
 	}
