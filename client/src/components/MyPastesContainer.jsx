@@ -11,7 +11,7 @@ class MyPastesContainer extends React.Component {
 		super(props);
 
 		this.state = {
-			successMessage,
+			successMessage: '',
 			pastes: [],
 			isLoaded: false,
 			pasteForm: {

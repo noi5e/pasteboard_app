@@ -2,8 +2,8 @@ const express = require('express');
 const validator = require('validator');
 let router = new express.Router();
 const async = require('async');
-const Book = require('../models/book');
 const User = require('../models/user');
+const Paste = require('../models/paste');
 const jwt = require('jsonwebtoken')
 
 const verifyJWT = (request, callback) => {
@@ -63,7 +63,7 @@ router.post('/add_new_paste', (request, response, next) => {
 		User.findOne({ _id: decodedToken.sub }, (error, user) => {
 			if (error) { console.log('error finding user for add new paste request: ' + error); }
 
-			const dateCreated = new Date();
+			const dateCreated = Date.now();
 
 			const newPasteData = {
 				imageURL: request.body.imageURL,

@@ -8,7 +8,7 @@ const PasteSchema = mongoose.Schema({
 		type: String
 	},
 	dateCreated: {
-		asafdsdf
+		type: Number
 	}
 })
 
