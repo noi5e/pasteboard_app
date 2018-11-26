@@ -79,10 +79,9 @@ class MyPastesContainer extends React.Component {
 
 		return (
 			<div className='col-lg-12'>
-				<h2 className='page-header'>My Pastes</h2>
 				{this.state.successMessage && <Alert bsStyle="success">{this.props.successMessage}</Alert>}
 				<MyPastesForm onChange={this.handleChange} onSubmit={this.handleSubmit} pasteForm={this.state.pasteForm} />
-				{this.state.isLoaded ? this.state.pastes.length > 0 ? <PastesList pastes={this.state.pastes} /> : 'You don\'t have any pastes. Why not add one?' : 'Loading profile...'}
+				{this.state.isLoaded ? this.state.pastes.length > 0 ? <div><h3 className='page-header'>Your Books</h3><PastesList pastes={this.state.pastes} /></div> : 'You don\'t have any pastes. Why not add one?' : 'Loading profile...'}
 			</div>
 		);
 	}
