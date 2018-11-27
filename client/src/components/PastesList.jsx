@@ -1,7 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Paste from './Paste.jsx';
-import Masonry from 'react-masonry-component';
+import ImageMasonry from 'react-image-masonry';
+
+const masonryOptions = {
+	transitionDuration: 0,
+	updateOnEachImageLoad: true
+};
 
 class PastesList extends React.Component {
 	render() {
@@ -11,10 +16,17 @@ class PastesList extends React.Component {
 			return <Paste key={index} imageURL={paste.imageURL} description={paste.description} />
 		});	
 
+		// pastes = this.props.pastes.map((paste, index) => {
+		// 	return paste.imageURL;
+		// });
+
 		return (
-			<Masonry className='grid'>
+			<ImageMasonry
+				numCols={3}
+				forceOrder={true}
+			>
 				{pastes}
-			</Masonry>
+			</ImageMasonry>
 		);
 	}
 }
