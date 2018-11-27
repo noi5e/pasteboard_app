@@ -6,7 +6,7 @@ class Paste extends React.Component {
 		return (
 			<div className="image-element-class" >
 				<img src={this.props.imageURL} /><br />
-				{this.props.description}
+				<div className="caption">{this.props.description}</div>
 			</div>
 		);
 	}
