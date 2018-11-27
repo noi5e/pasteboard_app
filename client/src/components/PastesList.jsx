@@ -23,7 +23,6 @@ class PastesList extends React.Component {
 		return (
 			<ImageMasonry
 				numCols={3}
-				forceOrder={true}
 			>
 				{pastes}
 			</ImageMasonry>

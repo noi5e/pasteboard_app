@@ -10,12 +10,17 @@
 .image-element-class {
   width: 200px;
   background-color: #ccc;
-  padding: 2px;
   border: 2px solid white;
 }
 
-.caption {
-  padding: 4px;
+.image-footer {
+  padding: 8px;
+  text-align: right;
+}
+
+.footer-icon {
+  padding: 2px;
+  display: inline;
 }
 
 .grid-item {

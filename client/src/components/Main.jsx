@@ -12,6 +12,7 @@ import AllBooksContainer from './AllBooksContainer.jsx';
 import LoginContainer from './LoginContainer.jsx';
 import RegisterContainer from './RegisterContainer.jsx';
 import MyPastesContainer from './MyPastesContainer.jsx';
+import UserPastes from './UserPastes.jsx';
 import Logout from './Logout.jsx';
 
 class Main extends React.Component {
@@ -58,6 +59,7 @@ class Main extends React.Component {
 					<Route path="/login" component={LoginContainer} />
 					<Route path="/register" component={RegisterContainer} />
 					<Route path="/my_pastes" component={MyPastesContainer} />
+					<Route path="/users/:username" component={UserPastes} />
 				</div>
 
 				<footer className='footer'>

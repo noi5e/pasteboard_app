@@ -34,6 +34,13 @@ app.use('/auth', auth);
 const user = require('./server/routes/user');
 app.use('/user', user);
 
+// https://alligator.io/react/react-router-ssr/
+
+app.get('/users/*', function(request, response, next) {
+	response.write('./server/static/index.html');
+	response.end();
+});
+
 app.get('*', function(request, response, next) {
 	console.log('Request: [GET]', request.originalUrl);
 	response.redirect('/');
