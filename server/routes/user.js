@@ -6,9 +6,15 @@ router.get('/get_user_pastes', (request, response, next) => {
 	User.findOne({ username: request.query.username }, (error, user) => {
 		if (error) { console.log('error finding user for get user pastes request: ' + error); }
 
-		response.status(200).json({
-			pastes: user.pastes
-		});
+		if (user) {
+			response.status(200).json({
+				pastes: user.pastes
+			});
+		} else {
+			response.status(500).json({
+				message: "Can't find user."
+			});
+		}
 	});
 });
 

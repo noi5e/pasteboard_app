@@ -10,12 +10,14 @@ class UserPastes extends React.Component {
 
 		this.state = {
 			isLoaded: false,
-			pastes: []
+			pastes: [],
+			username,
+			cantFindUser: false
 		}
 	}
 
 	componentDidMount() {
-		const username = encodeURIComponent(username);
+		const username = encodeURIComponent(this.state.username);
 		const formData = `username=${username}`
 
 		HTTP.makeRequest(null, 'get', '/user/get_user_pastes?' + formData, false, (xhr) => {
@@ -31,10 +33,13 @@ class UserPastes extends React.Component {
 	}
 
 	render() {
-		<div className='col-lg-12'>
-			<h3 className='page-header'>{username + '\'s Pastes'}</h3>
-			{this.state.isLoaded ? this.state.pastes.length > 0 ? <PasteList pastes={this.state.pastes} /> : username + ' doesn\'t have any pastes.' : 'Loading...'}
-		</div>
+
+		return(
+			<div className='col-lg-12'>
+				{this.state.isLoaded ? this.state.pastes && this.state.pastes.length > 0 ? <div><h3 className='page-header'>{this.state.username + '\'s Pastes'}</h3><PastesList pastes={this.state.pastes} /></div> : username + ' doesn\'t have any pastes.' : 'Loading...'}
+				{this.state.cantFindUser ? 'Error loading user page.' : ''}
+			</div>
+		)		
 	}
 }
 
