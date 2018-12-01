@@ -3,3 +3,4 @@ data
 node_modules
 client/dist/js/bundle.js
 .env
+npm-debug.log
