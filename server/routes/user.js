@@ -11,6 +11,8 @@ router.get('/get_user_pastes', (request, response, next) => {
 				pastes: user.pastes
 			});
 		} else {
+			console.log('can\'t find user')
+
 			response.status(500).json({
 				message: "Can't find user."
 			});

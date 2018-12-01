@@ -5,7 +5,8 @@ import Auth from '../../modules/Auth.js';
 
 import {
   Route,
-  Link
+  Link,
+  Switch
 } from 'react-router-dom'
 
 import AllBooksContainer from './AllBooksContainer.jsx';
@@ -14,6 +15,7 @@ import RegisterContainer from './RegisterContainer.jsx';
 import MyPastesContainer from './MyPastesContainer.jsx';
 import UserPastes from './UserPastes.jsx';
 import Logout from './Logout.jsx';
+import NotFound from './NotFound.jsx'
 
 class Main extends React.Component {
 	render() {
@@ -52,14 +54,15 @@ class Main extends React.Component {
 				</div>
 
 				<div className='row'>
-					<div className='col-lg-12'>
-					</div>
-					<Route exact path="/" component={AllBooksContainer} />
-					<Route path="/logout" component={Logout} />
-					<Route path="/login" component={LoginContainer} />
-					<Route path="/register" component={RegisterContainer} />
-					<Route path="/my_pastes" component={MyPastesContainer} />
-					<Route path="/users/:username" component={UserPastes} />
+					<Switch>
+						<Route exact path="/" component={AllBooksContainer} />
+						<Route path="/logout" component={Logout} />
+						<Route path="/login" component={LoginContainer} />
+						<Route path="/register" component={RegisterContainer} />
+						<Route path="/my_pastes" component={MyPastesContainer} />
+						<Route exact path="/users/:username" component={UserPastes} />
+						<Route component={NotFound} />
+					</Switch>
 				</div>
 
 				<footer className='footer'>

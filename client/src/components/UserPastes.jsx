@@ -27,17 +27,31 @@ class UserPastes extends React.Component {
 					isLoaded: true
 				})
 			} else {
-				console.log(xhr.response);
+				this.setState({
+					cantFindUser: true,
+					isLoaded: true
+				})
 			}
 		});
 	}
 
 	render() {
 
+		if (this.state.cantFindUser) {
+			return (
+				<div>
+					Error loading this page.
+				</div>
+			);
+		}
+
 		return(
 			<div className='col-lg-12'>
-				{this.state.isLoaded ? this.state.pastes && this.state.pastes.length > 0 ? <div><h3 className='page-header'>{this.state.username + '\'s Pastes'}</h3><PastesList pastes={this.state.pastes} /></div> : username + ' doesn\'t have any pastes.' : 'Loading...'}
-				{this.state.cantFindUser ? 'Error loading user page.' : ''}
+				{this.state.isLoaded ? 
+					this.state.pastes && this.state.pastes.length > 0 ? 
+						<div><h3 className='page-header'>{this.state.username + '\'s Pastes'}</h3><PastesList pastes={this.state.pastes} /></div> : 
+						this.state.username + ' doesn\'t have any pastes.' 
+						: 'Loading...'}
 			</div>
 		)		
 	}
