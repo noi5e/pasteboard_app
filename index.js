@@ -31,10 +31,8 @@ const api = require('./server/routes/api');
 app.use('/api', api);
 const auth = require('./server/routes/auth');
 app.use('/auth', auth);
-const user = require('./server/routes/user');
-app.use('/user', user);
-
-// https://alligator.io/react/react-router-ssr/
+const public = require('./server/routes/public');
+app.use('/public', public);
 
 app.get('*', function(request, response, next) {
 	console.log('Request: [GET]', request.originalUrl);
