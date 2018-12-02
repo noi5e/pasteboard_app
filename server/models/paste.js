@@ -9,6 +9,9 @@ const PasteSchema = mongoose.Schema({
 	},
 	dateCreated: {
 		type: Number
+	},
+	userId: {
+		type: String
 	}
 })
 

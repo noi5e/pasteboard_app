@@ -14,6 +14,7 @@ import LoginContainer from './LoginContainer.jsx';
 import RegisterContainer from './RegisterContainer.jsx';
 import MyPastesContainer from './MyPastesContainer.jsx';
 import UserPastes from './UserPastes.jsx';
+import FullViewPaste from './FullViewPaste.jsx'
 import Logout from './Logout.jsx';
 import NotFound from './NotFound.jsx'
 
@@ -60,6 +61,7 @@ class Main extends React.Component {
 						<Route path="/login" component={LoginContainer} />
 						<Route path="/register" component={RegisterContainer} />
 						<Route path="/my_pastes" component={MyPastesContainer} />
+						<Route exact path="/pastes/:pasteID" component={FullViewPaste} />
 						<Route exact path="/users/:username" component={UserPastes} />
 						<Route component={NotFound} />
 					</Switch>

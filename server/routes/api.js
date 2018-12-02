@@ -68,6 +68,7 @@ router.post('/add_new_paste', (request, response, next) => {
 			const newPasteData = {
 				imageURL: request.body.imageURL,
 				description: request.body.description,
+				userId: user._id,
 				dateCreated: dateCreated
 			}
 
@@ -76,18 +77,20 @@ router.post('/add_new_paste', (request, response, next) => {
 			newPaste.save((error, paste) => {
 				if (error) { console.log('error saving new paste in add new paste request: ' + error); }
 
-				user.pastes = user.pastes.concat([{
+				newUserPastes = user.pastes.concat([{
 					imageURL: request.body.imageURL,
 					description: request.body.description,
 					dateCreated: dateCreated,
 					pasteCollectionId: paste._id.toString()
 				}]);
 
+				user.pastes = newUserPastes;
+
 				user.save((error, updatedUser) => {
 					if (error) { console.log('error saving user\'s pastes in add new paste request:' + error); }
 
 					response.status(200).json({
-						pastes: updatedUser.pastes,
+						pastes: newUserPastes,
 						message: 'Added new paste!'
 					})
 				});

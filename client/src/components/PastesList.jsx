@@ -11,14 +11,11 @@ const masonryOptions = {
 class PastesList extends React.Component {
 	render() {
 		let pastes = [];
+		let pasteIDproperty = this.props.pastes[0].hasOwnProperty('pasteCollectionId') ? 'pasteCollectionId' : '_id';
 
 		pastes = this.props.pastes.map((paste, index) => {
-			return <Paste key={index} imageURL={paste.imageURL} description={paste.description} />
+			return <Paste key={index} imageURL={paste.imageURL} description={paste.description} pasteID={paste[pasteIDproperty]} />
 		});	
-
-		// pastes = this.props.pastes.map((paste, index) => {
-		// 	return paste.imageURL;
-		// });
 
 		return (
 			<ImageMasonry

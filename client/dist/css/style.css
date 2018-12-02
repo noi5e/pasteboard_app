@@ -18,7 +18,12 @@
   text-align: right;
 }
 
+.footer-link:hover {
+  text-decoration: none;
+}
+
 .footer-icon {
+  color: #333;
   padding: 2px;
   display: inline;
 }
