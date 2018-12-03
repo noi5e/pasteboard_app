@@ -22,6 +22,7 @@ class MyPastesContainer extends React.Component {
 
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
+		this.handlePasteDelete = this.handlePasteDelete.bind(this);
 	}
 
 	componentDidMount() {
@@ -48,6 +49,26 @@ class MyPastesContainer extends React.Component {
 
 		this.setState({
 			pasteForm: pasteForm
+		});
+	}
+
+	handlePasteDelete(event) {
+		event.preventDefault();
+
+		const pasteID = encodeURIComponent(event.target.id);
+		const formData = `pasteID=${pasteID}`;
+
+		HTTP.makeRequest(formData, 'post', '/api/remove_paste', true, (xhr) => {
+			if (xhr.status === 200) {
+				console.log(xhr.response);
+
+				this.setState({
+					pastes: xhr.response.pastes,
+					successMessage: xhr.response.message
+				});
+			} else {
+				console.log(xhr.response);
+			}
 		});
 	}
 
@@ -87,7 +108,7 @@ class MyPastesContainer extends React.Component {
 			<div className='col-lg-12'>
 				{this.state.successMessage && <Alert bsStyle="success">{this.state.successMessage}</Alert>}
 				<MyPastesForm onChange={this.handleChange} onSubmit={this.handleSubmit} pasteForm={this.state.pasteForm} />
-				{this.state.isLoaded ? this.state.pastes.length > 0 ? <div><h3 className='page-header'>Your Pastes</h3><PastesList pastes={this.state.pastes} /></div> : 'You don\'t have any pastes. Why not add one?' : 'Loading profile...'}
+				{this.state.isLoaded ? this.state.pastes.length > 0 ? <div><h3 className='page-header'>Your Pastes</h3><PastesList pastes={this.state.pastes} handlePasteDelete={(e) => this.handlePasteDelete(e)} /></div> : 'You don\'t have any pastes. Why not add one?' : 'Loading profile...'}
 			</div>
 		);
 	}

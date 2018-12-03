@@ -26,6 +26,7 @@
   color: #333;
   padding: 2px;
   display: inline;
+  cursor: pointer;
 }
 
 .full-view-paste {

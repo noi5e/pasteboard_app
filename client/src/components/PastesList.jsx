@@ -9,7 +9,7 @@ class PastesList extends React.Component {
 		let pasteIDproperty = this.props.pastes[0].hasOwnProperty('pasteCollectionId') ? 'pasteCollectionId' : '_id';
 
 		pastes = this.props.pastes.map((paste, index) => {
-			return <Paste key={paste[pasteIDproperty]} imageURL={paste.imageURL} description={paste.description} pasteID={paste[pasteIDproperty]} />
+			return <Paste key={paste[pasteIDproperty]} handlePasteDelete={(e) => this.props.handlePasteDelete(e)} imageURL={paste.imageURL} description={paste.description} pasteID={paste[pasteIDproperty]} />
 		});	
 
 		return (

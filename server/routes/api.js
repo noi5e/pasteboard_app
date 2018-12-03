@@ -44,14 +44,27 @@ function validatePasteForm(formData) {
 	}
 }
 
-router.post('/delete_paste', (request, response, next) => {
+router.post('/remove_paste', (request, response, next) => {
 	verifyJWT(request, (error, decodedToken) => {
 		if (error) { console.log('error verifying JWT for delete paste request: ' + error); }
 
 		User.findOne({ _id: decodedToken.sub }, (error, user) => {
 			if (error) { console.log('error finding user for remove paste request' + error); }
 
-			
+			user.pastes = user.pastes.filter((paste) => {
+				return paste.pasteCollectionId !== request.body.pasteID;
+			})
+			user.markModified('pastes');
+			user.save()
+
+			Paste.remove({ _id: request.body.pasteID }, (error) => {
+				if (error) { console.log('error removing paste from paste database: ' + error); }
+			})
+
+			response.status(200).json({
+				pastes: user.pastes,
+				successMessage: 'You deleted one of your pastes.'
+			})
 		});
 	});
 })
@@ -86,6 +99,7 @@ router.post('/add_new_paste', (request, response, next) => {
 				}]);
 
 				user.pastes = newUserPastes;
+				user.markModified('pastes');
 
 				user.save((error, updatedUser) => {
 					if (error) { console.log('error saving user\'s pastes in add new paste request:' + error); }
