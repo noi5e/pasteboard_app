@@ -60,6 +60,8 @@ class MyPastesContainer extends React.Component {
 
 		HTTP.makeRequest(formData, 'post', '/api/add_new_paste', true, (xhr) => {
 			if (xhr.status === 200) {
+				console.log(xhr.response.pastes)
+
 				this.setState({
 					pastes: xhr.response.pastes,
 					successMessage: xhr.response.message,

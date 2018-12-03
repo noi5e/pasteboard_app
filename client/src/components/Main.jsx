@@ -63,6 +63,7 @@ class Main extends React.Component {
 						<Route path="/my_pastes" component={MyPastesContainer} />
 						<Route exact path="/pastes/:pasteID" component={FullViewPaste} />
 						<Route exact path="/users/:username" component={UserPastes} />
+						<Route path="/404" component={NotFound} />
 						<Route component={NotFound} />
 					</Switch>
 				</div>

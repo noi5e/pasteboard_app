@@ -1,6 +1,7 @@
 import React from 'react';
 import PastesList from './PastesList.jsx';
 import HTTP from '../../modules/HTTP.js';
+import { Redirect } from 'react-router-dom'
 
 class UserPastes extends React.Component {
 	constructor(props) {
@@ -39,10 +40,8 @@ class UserPastes extends React.Component {
 
 		if (this.state.cantFindUser) {
 			return (
-				<div>
-					Error loading this page.
-				</div>
-			);
+				<Redirect to='/404' />
+			)
 		}
 
 		return(

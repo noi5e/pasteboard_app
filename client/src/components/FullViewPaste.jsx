@@ -1,5 +1,6 @@
 import React from 'react'
 import HTTP from '../../modules/HTTP.js'
+import { Redirect } from 'react-router-dom'
 
 class FullViewPaste extends React.Component {
 	constructor(props) {
@@ -12,14 +13,16 @@ class FullViewPaste extends React.Component {
 				description: this.props.location.state.description,
 				imageURL: this.props.location.state.imageURL,
 				pasteID: this.props.location.state.pasteID,
-				isLoaded: true
+				isLoaded: true,
+				cantFindPaste: false
 			}
 		} else {
 			this.state = {
 				description: undefined,
 				imageURL: undefined,
 				pasteID: undefined,
-				isLoaded: false
+				isLoaded: false,
+				cantFindPaste: false
 			}
 		}
 	}
@@ -43,12 +46,22 @@ class FullViewPaste extends React.Component {
 					})
 				} else {
 					console.log(xhr.response);
+
+					this.setState({
+						cantFindPaste: true
+					})
 				}
 			})
 		}
 	}
 
 	render() {
+		if (this.state.cantFindPaste) {
+			return (
+				<Redirect to='/404' />
+			)
+		}
+
 		if (this.state.isLoaded) {
 			return(
 				<div><img className='full-view-paste' src={this.state.imageURL} /><br />{this.state.description}</div>

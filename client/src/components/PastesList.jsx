@@ -3,18 +3,13 @@ import PropTypes from 'prop-types';
 import Paste from './Paste.jsx';
 import ImageMasonry from 'react-image-masonry';
 
-const masonryOptions = {
-	transitionDuration: 0,
-	updateOnEachImageLoad: true
-};
-
 class PastesList extends React.Component {
 	render() {
 		let pastes = [];
 		let pasteIDproperty = this.props.pastes[0].hasOwnProperty('pasteCollectionId') ? 'pasteCollectionId' : '_id';
 
 		pastes = this.props.pastes.map((paste, index) => {
-			return <Paste key={index} imageURL={paste.imageURL} description={paste.description} pasteID={paste[pasteIDproperty]} />
+			return <Paste key={paste[pasteIDproperty]} imageURL={paste.imageURL} description={paste.description} pasteID={paste[pasteIDproperty]} />
 		});	
 
 		return (

@@ -69,6 +69,7 @@ router.post('/add_new_paste', (request, response, next) => {
 				imageURL: request.body.imageURL,
 				description: request.body.description,
 				userId: user._id,
+				username: user.username,
 				dateCreated: dateCreated
 			}
 
