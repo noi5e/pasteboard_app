@@ -6,10 +6,15 @@ import ImageMasonry from 'react-image-masonry';
 class PastesList extends React.Component {
 	render() {
 		let pastes = [];
+
+		let usersOwnPastes = this.props.pastes[0].hasOwnProperty('pasteCollectionId');
+
 		let pasteIDproperty = this.props.pastes[0].hasOwnProperty('pasteCollectionId') ? 'pasteCollectionId' : '_id';
 
 		pastes = this.props.pastes.map((paste, index) => {
-			return <Paste key={paste[pasteIDproperty]} handlePasteDelete={(e) => this.props.handlePasteDelete(e)} imageURL={paste.imageURL} description={paste.description} pasteID={paste[pasteIDproperty]} />
+			console.log(paste.username)
+
+			return <Paste key={paste[pasteIDproperty]} handlePasteDelete={(e) => this.props.handlePasteDelete(e)} imageURL={paste.imageURL} description={paste.description} pasteID={paste[pasteIDproperty]} username={paste.username} usersOwnPastes={usersOwnPastes} />
 		});	
 
 		return (

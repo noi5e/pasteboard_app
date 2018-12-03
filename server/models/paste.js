@@ -12,6 +12,9 @@ const PasteSchema = mongoose.Schema({
 	},
 	userId: {
 		type: String
+	},
+	username: {
+		type: String
 	}
 })
 

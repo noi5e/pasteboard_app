@@ -64,7 +64,7 @@ class MyPastesContainer extends React.Component {
 
 				this.setState({
 					pastes: xhr.response.pastes,
-					successMessage: xhr.response.message
+					successMessage: xhr.response.successMessage
 				});
 			} else {
 				console.log(xhr.response);
@@ -104,13 +104,27 @@ class MyPastesContainer extends React.Component {
 			);
 		}
 
+		let pastes = "";
+
+		if (this.state.isLoaded) {
+			if (this.state.pastes.length > 0) {
+				pastes = <div><h3 className='page-header'>Your Pastes</h3><PastesList pastes={this.state.pastes} handlePasteDelete={(e) => this.handlePasteDelete(e)} /></div>
+			} else {
+				pastes = "You don\'t have any pastes. Why not add one?"
+			}
+		} else {
+			pastes = "Loading profile...";
+		}
+
 		return (
 			<div className='col-lg-12'>
 				{this.state.successMessage && <Alert bsStyle="success">{this.state.successMessage}</Alert>}
 				<MyPastesForm onChange={this.handleChange} onSubmit={this.handleSubmit} pasteForm={this.state.pasteForm} />
-				{this.state.isLoaded ? this.state.pastes.length > 0 ? <div><h3 className='page-header'>Your Pastes</h3><PastesList pastes={this.state.pastes} handlePasteDelete={(e) => this.handlePasteDelete(e)} /></div> : 'You don\'t have any pastes. Why not add one?' : 'Loading profile...'}
+				{pastes}
 			</div>
 		);
+
+		// {this.state.isLoaded ? this.state.pastes.length > 0 ? <div><h3 className='page-header'>Your Pastes</h3><PastesList pastes={this.state.pastes} handlePasteDelete={(e) => this.handlePasteDelete(e)} /></div> : 'You don\'t have any pastes. Why not add one?' : 'Loading profile...'}
 	}
 }
 

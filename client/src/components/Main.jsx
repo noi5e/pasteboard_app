@@ -9,7 +9,7 @@ import {
   Switch
 } from 'react-router-dom'
 
-import AllBooksContainer from './AllBooksContainer.jsx';
+import AllPastesContainer from './AllPastesContainer.jsx';
 import LoginContainer from './LoginContainer.jsx';
 import RegisterContainer from './RegisterContainer.jsx';
 import MyPastesContainer from './MyPastesContainer.jsx';
@@ -56,7 +56,7 @@ class Main extends React.Component {
 
 				<div className='row'>
 					<Switch>
-						<Route exact path="/" component={AllBooksContainer} />
+						<Route exact path="/" component={AllPastesContainer} />
 						<Route path="/logout" component={Logout} />
 						<Route path="/login" component={LoginContainer} />
 						<Route path="/register" component={RegisterContainer} />

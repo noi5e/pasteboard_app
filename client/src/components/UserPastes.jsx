@@ -21,7 +21,7 @@ class UserPastes extends React.Component {
 		const username = encodeURIComponent(this.state.username);
 		const formData = `username=${username}`
 
-		HTTP.makeRequest(null, 'get', '/user/get_user_pastes?' + formData, false, (xhr) => {
+		HTTP.makeRequest(null, 'get', '/public/get_user_pastes?' + formData, false, (xhr) => {
 			if (xhr.status === 200) {
 				this.setState({
 					pastes: xhr.response.pastes,
