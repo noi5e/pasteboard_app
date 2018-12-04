@@ -13,8 +13,14 @@
   border: 2px solid white;
 }
 
+.image-header {
+  padding: 8px;
+  text-align: left;
+}
+
 .image-footer {
   padding: 8px;
+  display: inline-block;
   text-align: right;
 }
 
@@ -34,6 +40,10 @@
   display: block;
 }
 
+.full-view-paste-description{
+  text-align: center;
+}
+
 .grid-item {
   width: 200px;
   float: left;
@@ -41,6 +51,16 @@
 
 .grid-item--width2 {
   width: 400px;
+}
+
+.pasted-user-link {
+  color: #444;
+  font-weight: bold;
+}
+
+.pasted-user-link:hover {
+  text-decoration: none;
+  color: #555;
 }
 
 /* Space out content a bit */

@@ -64,7 +64,10 @@ class FullViewPaste extends React.Component {
 
 		if (this.state.isLoaded) {
 			return(
-				<div><img className='full-view-paste' src={this.state.imageURL} /><br />{this.state.description}</div>
+				<div>
+					<img className='full-view-paste' src={this.state.imageURL} /><br />
+					<div className='full-view-paste-description'>{this.state.description}</div>
+				</div>
 			);
 		}
 
