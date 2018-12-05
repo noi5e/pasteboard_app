@@ -14,7 +14,11 @@ class FullViewPaste extends React.Component {
 				imageURL: this.props.location.state.imageURL,
 				pasteID: this.props.location.state.pasteID,
 				isLoaded: true,
-				cantFindPaste: false
+				cantFindPaste: false,
+				newImageDimensions: {
+					width: 0,
+					height: 0
+				}
 			}
 		} else {
 			this.state = {
@@ -22,9 +26,15 @@ class FullViewPaste extends React.Component {
 				imageURL: undefined,
 				pasteID: undefined,
 				isLoaded: false,
-				cantFindPaste: false
+				cantFindPaste: false,
+				newImageDimensions: {
+					width: 0,
+					height: 0
+				}
 			}
 		}
+
+		this.onImageLoad = this.onImageLoad.bind(this)
 	}
 
 	componentDidMount() {
@@ -55,6 +65,25 @@ class FullViewPaste extends React.Component {
 		}
 	}
 
+	onImageLoad(event) {
+		const width = event.target.offsetWidth
+		const height = event.target.offsetHeight
+
+		console.log('width: ' + width + ', height: ' + height)
+
+		if (width > 1168) {
+			const newWidth = 1168
+			const newHeight = 1168 * height / width
+
+			this.setState({
+				newImageDimensions: {
+					width: newWidth,
+					height: newHeight
+				}
+			})
+		}
+	}
+
 	render() {
 		if (this.state.cantFindPaste) {
 			return (
@@ -65,7 +94,7 @@ class FullViewPaste extends React.Component {
 		if (this.state.isLoaded) {
 			return(
 				<div>
-					<img className='full-view-paste' src={this.state.imageURL} /><br />
+					{this.state.newImageDimensions.width ? <img className='full-view-paste' src={this.state.imageURL} onLoad={this.onImageLoad} style={{ width: this.state.newImageDimensions.width, height: this.state.newImageDimensions.height }} /> : <img className='full-view-paste' src={this.state.imageURL} onLoad={this.onImageLoad} />}<br />
 					<div className='full-view-paste-description'>{this.state.description}</div>
 				</div>
 			);
