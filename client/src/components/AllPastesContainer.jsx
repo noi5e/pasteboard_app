@@ -28,7 +28,7 @@ class AllPastesContainer extends React.Component {
 	render() {
 		return (
 			<div className='col-lg-12'>
-				{this.state.isLoaded ? <PastesList pastes={this.state.pastes} /> : 'Loading...'}
+				{this.state.isLoaded ? this.state.pastes.length > 0 ? <PastesList pastes={this.state.pastes} usersOwnPaste={false} /> : 'No one has uploaded a paste yet. Why not be the first?' : 'Loading...'}
 			</div>
 		);
 	}

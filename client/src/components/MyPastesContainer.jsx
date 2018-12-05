@@ -108,7 +108,7 @@ class MyPastesContainer extends React.Component {
 
 		if (this.state.isLoaded) {
 			if (this.state.pastes.length > 0) {
-				pastes = <div><h3 className='page-header'>Your Pastes</h3><PastesList pastes={this.state.pastes} handlePasteDelete={(e) => this.handlePasteDelete(e)} /></div>
+				pastes = <div><h3 className='page-header'>Your Pastes</h3><PastesList pastes={this.state.pastes} handlePasteDelete={(e) => this.handlePasteDelete(e)} usersOwnPaste={true} /></div>
 			} else {
 				pastes = "You don\'t have any pastes. Why not add one?"
 			}
@@ -123,8 +123,6 @@ class MyPastesContainer extends React.Component {
 				{pastes}
 			</div>
 		);
-
-		// {this.state.isLoaded ? this.state.pastes.length > 0 ? <div><h3 className='page-header'>Your Pastes</h3><PastesList pastes={this.state.pastes} handlePasteDelete={(e) => this.handlePasteDelete(e)} /></div> : 'You don\'t have any pastes. Why not add one?' : 'Loading profile...'}
 	}
 }
 

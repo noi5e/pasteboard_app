@@ -48,7 +48,7 @@ class UserPastes extends React.Component {
 			<div className='col-lg-12'>
 				{this.state.isLoaded ? 
 					this.state.pastes && this.state.pastes.length > 0 ? 
-						<div><h3 className='page-header'>{this.state.username + '\'s Pastes'}</h3><PastesList pastes={this.state.pastes} /></div> : 
+						<div><h3 className='page-header'>{this.state.username + '\'s Pastes'}</h3><PastesList pastes={this.state.pastes} usersOwnPaste={false} /></div> : 
 						this.state.username + ' doesn\'t have any pastes.' 
 						: 'Loading...'}
 			</div>

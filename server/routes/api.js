@@ -95,7 +95,8 @@ router.post('/add_new_paste', (request, response, next) => {
 					imageURL: request.body.imageURL,
 					description: request.body.description,
 					dateCreated: dateCreated,
-					pasteCollectionId: paste._id.toString()
+					pasteCollectionId: paste._id.toString(),
+					username: user.username
 				}]);
 
 				user.pastes = newUserPastes;
