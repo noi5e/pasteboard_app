@@ -13,6 +13,16 @@ module.exports = {
 				query: { presets: ['es2015', 'react'] },
 				loader: 'babel-loader',
 				include: __dirname + '/client'
+			},
+			{
+				test: /\.jpg$/,
+				loader: 'url-loader',
+				// query: {
+				// 	limit: 10000
+				// }
+				options: {
+					outputPath: path.resolve(__dirname, 'client/dist/images')
+				}
 			}
 		]
 	}

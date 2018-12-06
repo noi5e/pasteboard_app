@@ -1,6 +1,7 @@
 import React from 'react'
 import HTTP from '../../modules/HTTP.js'
 import { Redirect } from 'react-router-dom'
+import brokenImage from '../../dist/images/image_unavailable.jpg'
 
 class FullViewPaste extends React.Component {
 	constructor(props) {
@@ -18,7 +19,8 @@ class FullViewPaste extends React.Component {
 				newImageDimensions: {
 					width: 0,
 					height: 0
-				}
+				},
+				imageIsBroken: false
 			}
 		} else {
 			this.state = {
@@ -34,7 +36,16 @@ class FullViewPaste extends React.Component {
 			}
 		}
 
+		this.handleBrokenImage = this.handleBrokenImage.bind(this)
 		this.onImageLoad = this.onImageLoad.bind(this)
+	}
+
+	handleBrokenImage(event) {
+		event.target.onerror = null;
+		
+		this.setState({
+			imageIsBroken: true
+		})
 	}
 
 	componentDidMount() {
@@ -69,8 +80,6 @@ class FullViewPaste extends React.Component {
 		const width = event.target.offsetWidth
 		const height = event.target.offsetHeight
 
-		console.log('width: ' + width + ', height: ' + height)
-
 		if (width > 1168) {
 			const newWidth = 1168
 			const newHeight = 1168 * height / width
@@ -91,10 +100,24 @@ class FullViewPaste extends React.Component {
 			)
 		}
 
+		// let imageSource = '';
+
+		// if (this.state.imageIsBroken === true) {
+		// 	imageSource = this.state.imageURL
+		// } else {
+		// 	console.log('image is broken');
+
+		// 	imageSource = brokenImage
+		// }
+
+		let imageSource = (this.state.imageIsBroken === true) ? brokenImage : this.state.imageURL;
+
 		if (this.state.isLoaded) {
 			return(
 				<div>
-					{this.state.newImageDimensions.width ? <img className='full-view-paste' src={this.state.imageURL} onLoad={this.onImageLoad} style={{ width: this.state.newImageDimensions.width, height: this.state.newImageDimensions.height }} /> : <img className='full-view-paste' src={this.state.imageURL} onLoad={this.onImageLoad} />}<br />
+					{this.state.newImageDimensions.width ? 
+						<img className='full-view-paste' src={imageSource} onLoad={this.onImageLoad} style={{ width: this.state.newImageDimensions.width, height: this.state.newImageDimensions.height }} /> : 
+						<img className='full-view-paste' src={imageSource} onLoad={this.onImageLoad} onError={this.handleBrokenImage} />}<br />
 					<div className='full-view-paste-description'>{this.state.description}</div>
 				</div>
 			);

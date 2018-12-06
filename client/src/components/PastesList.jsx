@@ -5,13 +5,14 @@ import OtherUsersPaste from './OtherUsersPaste.jsx';
 import ImageMasonry from 'react-image-masonry';
 
 class PastesList extends React.Component {
+	
 	render() {
 		let pastes = [];
 
 		if (this.props.usersOwnPaste == true) {
 			pastes = this.props.pastes.map((paste, index) => {
 				return (
-					<UsersOwnPaste key={paste.pasteCollectionId} handlePasteDelete={(e) => this.props.handlePasteDelete(e)} imageURL={paste.imageURL} description={paste.description} pasteID={paste.pasteCollectionId} />
+					<UsersOwnPaste key={paste.pasteCollectionId} handlePasteDelete={(e) => this.props.handlePasteDelete(e)} imageURL={paste.imageURL} description={paste.description} handleBrokenImage={this.handleBrokenImage} pasteID={paste.pasteCollectionId} />
 				);
 			});	
 		} else {
