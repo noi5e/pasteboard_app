@@ -3,9 +3,11 @@ const express = require('express')
 const app = express()
 const http = require('http').Server(app)
 
+const session = require('express-session')
+const MongoStore = require('connect-mongo')(session)
+
 const path = require('path')
 const fs = require('fs')
-const session = require('express-session')
 const bodyParser = require('body-parser')
 const socketio = require('socket.io')
 
@@ -30,17 +32,16 @@ app.use(passport.initialize());
 const githubLoginStrategy = require('./server/passport/github-login')
 passport.use('github-login', githubLoginStrategy)
 
-// app.use(cors({
-// 	origin: 
-// }))
-
-let store = new session.MemoryStore
+// let store = new session.MemoryStore
 
 app.use(session({
 	secret: process.env.SESSION_SECRET,
 	resave: true,
 	saveUninitialized: true,
-	store: store
+	store: new MongoStore({ 
+		mongooseConnection: mongoose.connection,
+		ttl: 14 * 24 * 60 * 60
+	 })
 }))
 
 const io = socketio(http)
