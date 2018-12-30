@@ -1,10 +1,11 @@
 const express = require('express');
-const validator = require('validator');
 let router = new express.Router();
+const validator = require('validator');
 const async = require('async');
+const jwt = require('jsonwebtoken')
+
 const User = require('../models/user');
 const Paste = require('../models/paste');
-const jwt = require('jsonwebtoken')
 
 const verifyJWT = (request, callback) => {
 	const jsonWebToken = request.headers.authorization.split(" ")[1];
@@ -23,14 +24,14 @@ function validatePasteForm(formData) {
 	let isFormValid = true;
 	let message = '';
 
-	if (!formData || typeof formData.title !== 'string' || formData.title.trim().length === 0) {
+	if (!formData || typeof formData.imageURL !== 'string' || formData.title.trim().length === 0) {
 		isFormValid = false;
-		errors.title = 'Please provide a title for this book.';
+		errors.title = 'Please provide a URL for this paste.';
 	}
 
-	if (!formData || typeof formData.author !== 'string' || formData.author.trim().length === 0) {
+	if (!formData || typeof formData.description !== 'string' || formData.author.trim().length === 0) {
 		isFormValid = false;
-		errors.author = 'Please provide an author for this book.';
+		errors.author = 'Please provide an description for this paste.';
 	}
 
 	if (!isFormValid) {

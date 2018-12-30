@@ -1,29 +1,30 @@
-var path = require('path');
+const path = require('path')
 
 module.exports = {
-	entry: './client/src/app.jsx',
+	entry: './src/index.js',
 	output: {
-		path: path.resolve(__dirname, 'client/dist/js'),
+		path: path.resolve(__dirname, 'dist/js'),
 		filename: 'bundle.js'
 	},
 	module: {
-		loaders: [
+		rules: [
 			{
-				test: /\.jsx?/,
-				query: { presets: ['es2015', 'react'] },
-				loader: 'babel-loader',
-				include: __dirname + '/client'
+				test: /\.m?jsx?$/,
+				exclude: /node_modules/,
+				use: {
+					loader: 'babel-loader',
+					options: {
+						presets: ['@babel/preset-env', '@babel/preset-react']
+					}
+				}
 			},
 			{
 				test: /\.jpg$/,
 				loader: 'url-loader',
-				// query: {
-				// 	limit: 10000
-				// }
 				options: {
 					outputPath: path.resolve(__dirname, 'client/dist/images')
 				}
 			}
 		]
 	}
-};
+}

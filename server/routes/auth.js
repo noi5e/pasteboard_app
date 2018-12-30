@@ -1,164 +1,34 @@
-var express = require('express');
-var validator = require('validator');
-var passport = require('passport');
-var router = new express.Router();
-var User = require ('../models/user');
-const jwt = require ('jsonwebtoken');
-const async = require('async');
+const express = require('express')
+const router = new express.Router()
+const fs = require('fs')
+const path = require('path')
+const passport = require('passport')
+const url = require('url')
 
-function validateLoginForm(formData) {
-	const errors = {};
-	let isFormValid = true;
-	let message = '';
-
-	if (!formData || typeof formData.username !== 'string' || formData.username.trim().length === 0) {
-		isFormValid = false;
-		errors.username = 'Please provide your username.';
-	}
-
-	if (!formData || typeof formData.password !== 'string' || formData.password.trim().length === 0) {
-		isFormValid = false;
-		errors.password = 'Please provide your password.';
-	}
-
-	if (!isFormValid) {
-		message = 'Check the form for errors.';
-	}
-
-	return {
-		success: isFormValid,
-		message,
-		errors
-	}
+const addSocketIdToSession = function(request, response, next) {
+	request.session.socketId = request.query.socketId
+	next()
 }
 
-router.post('/login', function(request, response, next) {
-	var validationResult = validateLoginForm(request.body);
+router.get('/login', addSocketIdToSession, passport.authenticate('github-login'))
 
-	if (!validationResult.success) {
-		return response.status(400).json({
-			success: false,
-			message: validationResult.message,
-			errors: validationResult.errors
-		});
-	}
-
-	return passport.authenticate('local-login', function(error, token, username) {
-		const errors = {};
+router.get('/github/callback', function(request, response, next) {
+	return passport.authenticate('github-login', { successRedirect: '/', failureRedirect: '/login' }, function(error, authResult) {
+		const io = request.app.get('io')
 
 		if (error) {
-			if (error.name === 'IncorrectCredentialsError') {
-				errors.login = error.message;
-
-				return response.status(400).json({
-					success: false,
-					message: "Couldn't find username/password in database.",
-					errors: errors
-				});
-			}
-
-			errors.server = "Server couldn\'t process the form."
-
-			return response.status(400).json({
-				success: false,
-				message: "Couldn\'t process the form.",
-				errors: errors
-			});
+			// session: false
+			io.in(request.session.socketId).emit('github', { error })
 		}
 
-		return response.json({
-			success: true,
-			message: 'You have successfully logged in!',
-			token,
-			username
-		});
-	}) (request, response, next);
-});
-
-function validateRegisterForm(formData) {
-	const errors = {};
-	const firstName = decodeURIComponent(formData.firstName);
-	const username = decodeURIComponent(formData.username);
-	const email = decodeURIComponent(formData.email);
-	const password = decodeURIComponent(formData.password);
-	const passwordTwo = decodeURIComponent(formData.passwordTwo);
-
-	let isFormValid = true;
-	let message = '';
-
-	if (typeof firstName !== 'string' || validator.isEmpty(firstName)) {
-		isFormValid = false;
-		errors.firstName = "First name is required."
-	}
-
-	if (typeof username !== 'string' || validator.isEmpty(username) || !validator.isAlphanumeric(username)) {
-		isFormValid = false;
-		errors.username = "Username is required, and must contain only letters and numbers."
-	}
-
-	if (typeof email !== 'string' || validator.isEmpty(email) || !validator.isEmail(email)) {
-		isFormValid = false;
-		errors.email = "Please enter a proper e-mail address.";
-	}
-
-	if (typeof password !== 'string' || validator.isEmpty(password)) {
-		isFormValid = false;
-		errors.password = "Password is required.";
-	}
-
-	if (typeof passwordTwo !== 'string' || validator.isEmpty(passwordTwo) || !(password === passwordTwo)) {
-		isFormValid = false;
-		errors.passwordTwo = "Confirmed password doesn't match.";
-	}
-
-	if (!isFormValid) {
-		message = "Check the form for errors.";
-	}
-
-	return {
-			success: isFormValid,
-			message: message,
-			errors: errors
-	};
-
-}
-
-router.post('/register', function(request, response, next) {
-	var validationResult = validateRegisterForm(request.body);
-
-	if (!validationResult.success) {
-		return response.status(400).json({
-			success: false,
-			message: validationResult.message,
-			errors: validationResult.errors
-		});
-	}
-
-	return passport.authenticate('local-register', (error) => {
-
-		if (error) {
-			var authenticationResult = {
-				success: false,
-				message: 'Check the form for errors.',
-				errors: {}
-			};
-
-			if (error.name === 'MongoError' && error.code === 11000 && error.message.indexOf('username_1') > 0) {
-				authenticationResult.errors.username = 'This username is already taken.';
-			}
-
-			if (error.name === 'MongoError' && error.code === 11000 && error.message.indexOf('email_1') > 0) {
-				authenticationResult.errors.email = 'This e-mail address is already taken.';
-			}
-
-			return response.status(409).json(authenticationResult);
+		const authData = {
+			username: authResult.username,
+			token: authResult.token,
+			message: authResult.successMessage
 		}
 
-		return response.status(200).json({
-			success: true,
-			message: 'You successfully created an account! Please login.'
-		});
-	}) (request, response, next);
-});
+		io.in(request.session.socketId).emit('github', authData)
+	}) (request, response, next)
+})
 
-module.exports = router;
+module.exports = router
