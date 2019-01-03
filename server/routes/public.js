@@ -5,8 +5,6 @@ const User = require('../models/user');
 const Paste = require('../models/paste');
 
 router.get('/get_all_pastes', (request, response, next) => {
-	console.log('got request for all pastes')
-
 	Paste.find({}, (error, pastes) => {
 		if (error) { console.log('error retrieving all pastes: ' + error); }
 

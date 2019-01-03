@@ -25,8 +25,6 @@ class Main extends React.Component {
 		this.state = {
 			isLoggedIn: false,
 			pastes: [],
-			successMessage: '',
-			failureMessage: '',
 			loginButtonDisabled: ''
 		}
 
@@ -93,17 +91,16 @@ class Main extends React.Component {
 
 			Auth.authenticateUser(response.token, response.username)
 
+			localStorage.setItem('successMessage', response.message)
+
 			this.setState({
-				isLoggedIn: true,
-				successMessage: response.message
+				isLoggedIn: true
 			})
 		}
 	}
 
 	handleLogout(message) {
-		this.setState({
-			successMessage: 'You logged out of your account.'
-		})	
+		localStorage.setItem('successMessage', message)
 	}
 
 	render() {
@@ -133,17 +130,6 @@ class Main extends React.Component {
 
 		}
 
-		let successMessage = ''
-		let failureMessage = ''
-
-		if (this.state.successMessage) {
-			successMessage = <div className="col-lg-12"><Alert bsStyle='success'>{this.state.successMessage}</Alert></div>
-		}
-
-		if (this.state.failureMessage) {
-			failureMessage = <div className="col-lg-12"><Alert bsStyle='danger'>{this.state.failureMessage}</Alert></div>
-		}
-
 		return (
 			<div className='container'>
 				<div className='header clearfix'>
@@ -154,8 +140,6 @@ class Main extends React.Component {
 				</div>
 
 				<div className='row'>
-					{successMessage}
-					{failureMessage}
 					<Switch>
 						<Route exact path="/" render={(props) => <AllPastesContainer {...props} handleLogout={(message) => this.handleLogout(message)} />} />
 						<Route path="/my_pastes" component={MyPastesContainer} />

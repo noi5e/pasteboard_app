@@ -66,6 +66,8 @@ class MyPastesContainer extends React.Component {
 		const pasteID = encodeURIComponent(event.target.id);
 		const formData = `pasteID=${pasteID}`;
 
+		window.scrollTo(0, 0)
+
 		HTTP.makeRequest(formData, 'post', '/api/remove_paste', true, (xhr) => {
 			if (xhr.status === 200) {
 				console.log(xhr.response);
@@ -86,6 +88,8 @@ class MyPastesContainer extends React.Component {
 		const imageURL = encodeURIComponent(this.state.pasteForm.imageURL);
 		const description = encodeURIComponent(this.state.pasteForm.description);
 		const formData = `imageURL=${imageURL}&description=${description}`;
+
+		window.scrollTo(0, 0)
 
 		HTTP.makeRequest(formData, 'post', '/api/add_new_paste', true, (xhr) => {
 			if (xhr.status === 200) {

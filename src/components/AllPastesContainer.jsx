@@ -10,9 +10,27 @@ class AllPastesContainer extends React.Component {
 	constructor(props) {
 		super(props)
 
+		let successMessage = ''
+		let failureMessage = ''
+
+		const storedSuccessMessage = localStorage.getItem('successMessage')
+		const storedFailureMessage = localStorage.getItem('failureMessage')
+
+		if (storedSuccessMessage) {
+			successMessage = storedSuccessMessage
+			localStorage.removeItem('successMessage')
+		}
+
+		if (storedFailureMessage) {
+			failureMessage = storedFailureMessage
+			localStorage.removeItem('failureMessage')
+		}
+
 		this.state = {
 			pastes: [],
-			isLoaded: false
+			isLoaded: false,
+			successMessage,
+			failureMessage
 		}
 	}
 
@@ -38,8 +56,21 @@ class AllPastesContainer extends React.Component {
 	}
 
 	render() {
+		let successMessage = ''
+		let failureMessage = ''
+
+		if (this.state.successMessage) {
+			successMessage = <div className="col-lg-12"><Alert bsStyle='success'>{this.state.successMessage}</Alert></div>
+		}
+
+		if (this.state.failureMessage) {
+			failureMessage = <div className="col-lg-12"><Alert bsStyle='danger'>{this.state.failureMessage}</Alert></div>
+		}
+
 		return (
 			<div className="col-lg-12">
+				{successMessage}
+				{failureMessage}
 				{this.state.isLoaded ? this.state.pastes.length > 0 ? <PastesList pastes={this.state.pastes} /> : 'No one has uploaded a paste yet. Why not be the first?' : 'Loading...'}
 			</div>
 		)
