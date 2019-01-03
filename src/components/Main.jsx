@@ -58,6 +58,10 @@ class Main extends React.Component {
 		})
 	}
 
+	componentWillUnmount() {
+		socket.disconnect()
+	}
+
 	startAuth(e) {
 		if (!this.state.loginButtonDisabled) {
 			e.preventDefault()
