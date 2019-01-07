@@ -55,7 +55,6 @@ class Main extends React.Component {
 		socket.on('github', (response) => {
 			this.popup.close()
 
-			console.log('response in GithubAuth', response)
 			this.handleAuthentication(response)
 		})
 	}
@@ -107,7 +106,7 @@ class Main extends React.Component {
 		})
 	}
 
-	handleLogout(message) {
+	handleLogout() {
 		this.setState({
 			successMessage: 'You have been logged out.'
 		})
@@ -129,6 +128,8 @@ class Main extends React.Component {
 					</li>
 				</ul>
 		} else {
+			// pass socket and methods to GithubButton
+
 			navigationItems = 
 						<ul className='nav nav-pills pull-right'>
 							<li role='presentation'>

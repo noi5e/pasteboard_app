@@ -37,11 +37,6 @@ class AllPaste extends React.Component {
 			image = <img src={brokenImage} />;
 		}
 
-		// <div className="image-header">
-		// 	{this.props.userGalleryPaste === false ? 'pasted by ' : ''}
-		// 	{this.props.userGalleryPaste === false ? <Link className='pasted-user-link' to={{ pathname: "/users/" + this.props.username, state: { imageURL: this.props.imageURL, description: this.props.description, pasteID: this.props.pasteID } }}>{this.props.username}</Link> : '' }
-		// </div>
-
 		return (
 			<div className="image-element-class">
 				{this.props.userGalleryPaste === true ? <div className='image-header'>pasted by <Link className='pasted-user-link' to={{ pathname: "/users/" + this.props.username, state: { imageURL: this.props.imageURL, description: this.props.description, pasteID: this.props.pasteID } }}>{this.props.username}</Link></div> : ''}

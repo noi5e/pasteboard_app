@@ -101,16 +101,6 @@ class FullViewPaste extends React.Component {
 			)
 		}
 
-		// let imageSource = '';
-
-		// if (this.state.imageIsBroken === true) {
-		// 	imageSource = this.state.imageURL
-		// } else {
-		// 	console.log('image is broken');
-
-		// 	imageSource = brokenImage
-		// }
-
 		let imageSource = (this.state.imageIsBroken === true) ? brokenImage : this.state.imageURL;
 
 		if (this.state.isLoaded) {
@@ -123,8 +113,6 @@ class FullViewPaste extends React.Component {
 				</div>
 			);
 		}
-
-		// 1168 px is the max
 
 		return (
 			<div className='col-lg-12'>

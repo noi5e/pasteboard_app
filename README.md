@@ -10,5 +10,3 @@
 </ul>
 
 <p>Sample deployment here: https://gentle-refuge-57440.herokuapp.com</p>
-
-<!-- middleware rejecting unauthenticated requests to /api -->

@@ -17,7 +17,6 @@ router.get('/github/callback', function(request, response, next) {
 		const io = request.app.get('io')
 
 		if (error) {
-			// session: false
 			io.in(request.session.socketId).emit('github', { error })
 		}
 

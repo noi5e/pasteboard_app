@@ -2,11 +2,6 @@ import React from 'react'
 import { Alert } from 'react-bootstrap'
 import { Redirect } from 'react-router-dom'
 
-// import { library } from '@fortawesome/fontawesome-svg-core'
-// import { faSearchPlus, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-// library.add(faTrashAlt)
-
 import MyPastesForm from './MyPastesForm.jsx'
 import MyPastesList from './MyPastesList.jsx'
 
@@ -61,8 +56,6 @@ class MyPastesContainer extends React.Component {
 	handlePasteDelete(event) {
 		event.preventDefault();
 
-		console.log(event.target.id)
-
 		const pasteID = encodeURIComponent(event.target.id);
 		const formData = `pasteID=${pasteID}`;
 
@@ -70,8 +63,6 @@ class MyPastesContainer extends React.Component {
 
 		HTTP.makeRequest(formData, 'post', '/api/remove_paste', true, (xhr) => {
 			if (xhr.status === 200) {
-				console.log(xhr.response);
-
 				this.setState({
 					pastes: xhr.response.pastes,
 					successMessage: xhr.response.successMessage
@@ -93,8 +84,6 @@ class MyPastesContainer extends React.Component {
 
 		HTTP.makeRequest(formData, 'post', '/api/add_new_paste', true, (xhr) => {
 			if (xhr.status === 200) {
-				console.log(xhr.response.pastes)
-
 				this.setState({
 					pastes: xhr.response.pastes,
 					successMessage: xhr.response.message,
