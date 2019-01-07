@@ -25,11 +25,13 @@ class Main extends React.Component {
 		this.state = {
 			isLoggedIn: false,
 			pastes: [],
-			loginButtonDisabled: ''
+			loginButtonDisabled: false,
+			successMessage: ''
 		}
 
 		this.handleAuthentication = this.handleAuthentication.bind(this)
 		this.handleLogout = this.handleLogout.bind(this)
+		this.clearMessage = this.clearMessage.bind(this)
 	}
 
 	checkPopup() {
@@ -38,7 +40,7 @@ class Main extends React.Component {
 
 			if (!popup || popup.closed || popup.closed === undefined) {
 				clearInterval(check)
-				this.setState({ loginButtonDisabled: '' })
+				this.setState({ loginButtonDisabled: false })
 			}
 		}, 1000)
 	}
@@ -67,7 +69,7 @@ class Main extends React.Component {
 			e.preventDefault()
 			this.popup = this.openPopup()
 			this.checkPopup()
-			this.setState({ loginButtonDisabled: 'disabled' })
+			this.setState({ loginButtonDisabled: true })
 		}
 	}
 
@@ -90,21 +92,25 @@ class Main extends React.Component {
 		if (response.error) {
 			console.log(response.error)
 		} else {
-			console.log('token in Main:', response.token)
-			console.log('username in Main:', response.username)
-
 			Auth.authenticateUser(response.token, response.username)
 
-			localStorage.setItem('successMessage', response.message)
-
 			this.setState({
-				isLoggedIn: true
+				isLoggedIn: true,
+				successMessage: response.message
 			})
 		}
 	}
 
+	clearMessage() {
+		this.setState({
+			successMessage: ''
+		})
+	}
+
 	handleLogout(message) {
-		localStorage.setItem('successMessage', message)
+		this.setState({
+			successMessage: 'You have been logged out.'
+		})
 	}
 
 	render() {
@@ -126,7 +132,7 @@ class Main extends React.Component {
 			navigationItems = 
 						<ul className='nav nav-pills pull-right'>
 							<li role='presentation'>
-								<Button className='github-login-button' onClick={this.startAuth.bind(this)}>
+								<Button className='github-login-button' disabled={this.state.loginButtonDisabled} onClick={this.startAuth.bind(this)}>
 									<FontAwesomeIcon icon={['fab', 'github']} size='lg' className='github-logo' /> Login with Github
 								</Button>
 							</li>
@@ -145,9 +151,9 @@ class Main extends React.Component {
 
 				<div className='row'>
 					<Switch>
-						<Route exact path="/" render={(props) => <AllPastesContainer {...props} handleLogout={(message) => this.handleLogout(message)} />} />
+						<Route exact path="/" render={(props) => <AllPastesContainer {...props} successMessage={this.state.successMessage} clearMessage={this.clearMessage} />} />
 						<Route path="/my_pastes" component={MyPastesContainer} />
-						<Route path="/logout" component={Logout} />
+						<Route path="/logout" render={(props) => <Logout {...props} handleLogout={this.handleLogout} />} />
 						<Route exact path="/pastes/:pasteID" component={FullViewPaste} />
 						<Route exact path="/users/:username" component={UserGallery} />
 						<Route path="/404" component={NotFound} />

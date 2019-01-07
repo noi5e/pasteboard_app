@@ -32,8 +32,6 @@ app.use(passport.initialize());
 const githubLoginStrategy = require('./server/passport/github-login')
 passport.use('github-login', githubLoginStrategy)
 
-// let store = new session.MemoryStore
-
 app.use(session({
 	secret: process.env.SESSION_SECRET,
 	resave: true,

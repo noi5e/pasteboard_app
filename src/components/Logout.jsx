@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom';
 
 class Logout extends React.Component {
 	componentDidMount() {
-		localStorage.setItem('userJustLoggedOut', 'true')
+		this.props.handleLogout()
 		Auth.deauthenticateUser();
 	}
 
